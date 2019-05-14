@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addItem } from "../actions";
+import { addItem, clearComplete } from "../actions";
 
 class TodoContainer extends React.Component {
   constructor() {
@@ -11,28 +11,39 @@ class TodoContainer extends React.Component {
   }
 
   changeHandler = ev => {
-    this.setState({input: ev.target.value})
-  }
+    this.setState({ input: ev.target.value });
+  };
 
-  clickHandler = ev => {
+  submitHandler = ev => {
     ev.preventDefault();
-    this.props.addItem(this.state.input)
-    this.setState({input: ""})
-  }
+    if (this.state.input === "") {return};
+    this.props.addItem(this.state.input);
+    this.setState({ input: "" });
+  };
+
+  clearAllHandler = ev => {
+    ev.preventDefault();
+    this.props.clearComplete();
+  };
 
   render() {
     return (
-      <form action="">
-        <input type="text" placeholder="WRITE ITEM HERE" value={this.state.input} onChange={this.changeHandler}/>
-        <button onClick={this.clickHandler}>submit</button>
+      <form className="TodoForm" onSubmit={this.submitHandler}>
+        <input
+          type="text"
+          placeholder="...add an item"
+          value={this.state.input}
+          onChange={this.changeHandler}
+        />
+        <button onClick={this.submitHandler}>submit</button>
+        <button onClick={this.clearAllHandler}>clear all completed</button>
       </form>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return {
-  };
+  return {};
 };
 
-export default connect(mapStateToProps, { addItem })(TodoContainer);
+export default connect(mapStateToProps, { addItem, clearComplete })(TodoContainer);
