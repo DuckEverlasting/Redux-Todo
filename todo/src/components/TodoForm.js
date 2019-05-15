@@ -42,8 +42,4 @@ class TodoContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {};
-};
-
-export default connect(mapStateToProps, { addItem, clearComplete })(TodoContainer);
+export default connect(null, { addItem, clearComplete })(TodoContainer);
